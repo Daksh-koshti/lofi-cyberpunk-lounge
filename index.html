@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Lo-Fi Lounge // Vibe Space</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600;700&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="tokyo-rain">
+  <!-- Interactive particle canvas background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Top Bar -->
+    <header class="top-nav">
+      <div class="brand">
+        <div class="status-dot"></div>
+        <span class="brand-title">CYBERPUNK LOUNGE</span>
+        <span class="brand-badge">v1.0 • VIBE CODE</span>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="theme-bar">
+        <span class="theme-label">VIBE PRESET:</span>
+        <button class="theme-chip active" data-vibe="tokyo-rain">🌧️ Tokyo Rain</button>
+        <button class="theme-chip" data-vibe="synth-sunset">🌅 Synth Sunset</button>
+        <button class="theme-chip" data-vibe="matrix-core">💻 Matrix Core</button>
+        <button class="theme-chip" data-vibe="deep-space">🌌 Deep Space</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="grid-layout">
+      <!-- Left Card: Greeting & Focus Station -->
+      <section class="card glass focus-station">
+        <div class="card-header">
+          <span class="section-tag">// SYSTEM TIME & FOCUS</span>
+          <span class="live-indicator">LIVE</span>
+        </div>
+
+        <div class="greeting-box">
+          <h2 id="greeting-text" class="greeting">Good Day, Daksh</h2>
+          <div class="clock-display" id="clock-display">00:00:00</div>
+          <p class="subtitle" id="vibe-quote">"The best time to vibe code is right now."</p>
+        </div>
+
+        <!-- Focus Timer / Pomodoro -->
+        <div class="timer-section">
+          <div class="timer-circle-wrap">
+            <svg class="timer-svg" viewBox="0 0 220 220">
+              <circle class="timer-track" cx="110" cy="110" r="95"></circle>
+              <circle class="timer-progress" id="timer-progress-bar" cx="110" cy="110" r="95"></circle>
+            </svg>
+            <div class="timer-time" id="timer-time">25:00</div>
+            <div class="timer-mode" id="timer-mode-label">FOCUS SESSION</div>
+          </div>
+
+          <div class="timer-controls">
+            <button class="btn btn-primary" id="btn-timer-toggle">
+              <span class="btn-icon">▶</span> <span id="btn-timer-label">START FOCUS</span>
+            </button>
+            <button class="btn btn-secondary" id="btn-timer-reset">↺ RESET</button>
+          </div>
+
+          <div class="timer-presets">
+            <button class="preset-btn active" data-mins="25">25m Focus</button>
+            <button class="preset-btn" data-mins="50">50m Deep</button>
+            <button class="preset-btn" data-mins="5">5m Chill</button>
+          </div>
+        </div>
+
+        <!-- Current Focus Target -->
+        <div class="focus-input-box">
+          <label for="focus-input">CURRENT MISSION</label>
+          <input type="text" id="focus-input" placeholder="What are you creating today? (e.g. Learning to Vibe Code)">
+        </div>
+      </section>
+
+      <!-- Right Card: Generative Ambient Sound Mixer -->
+      <section class="card glass sound-station">
+        <div class="card-header">
+          <span class="section-tag">// SYNTHESIZED SOUNDSCAPES</span>
+          <button class="btn-sound-power" id="btn-master-audio">
+            <span class="power-icon">⏻</span> <span id="master-audio-text">SOUND: OFF</span>
+          </button>
+        </div>
+
+        <p class="sound-desc">
+          100% procedurally synthesized in your browser using the Web Audio API. Zero external audio downloads needed.
+        </p>
+
+        <div class="sound-channels">
+          <!-- Channel 1: Rain -->
+          <div class="sound-channel" data-channel="rain">
+            <div class="channel-info">
+              <span class="channel-name">🌧️ Cyber Rain</span>
+              <span class="channel-val" id="val-rain">50%</span>
+            </div>
+            <input type="range" class="slider" id="vol-rain" min="0" max="100" value="50">
+          </div>
+
+          <!-- Channel 2: Cosmic Drone -->
+          <div class="sound-channel" data-channel="drone">
+            <div class="channel-info">
+              <span class="channel-name">🌌 Synthwave Drone</span>
+              <span class="channel-val" id="val-drone">30%</span>
+            </div>
+            <input type="range" class="slider" id="vol-drone" min="0" max="100" value="30">
+          </div>
+
+          <!-- Channel 3: Vinyl Crackle -->
+          <div class="sound-channel" data-channel="vinyl">
+            <div class="channel-info">
+              <span class="channel-name">📻 Lo-Fi Vinyl Crackle</span>
+              <span class="channel-val" id="val-vinyl">20%</span>
+            </div>
+            <input type="range" class="slider" id="vol-vinyl" min="0" max="100" value="20">
+          </div>
+
+          <!-- Channel 4: Deep Binaural Beats -->
+          <div class="sound-channel" data-channel="binaural">
+            <div class="channel-info">
+              <span class="channel-name">🧠 Alpha Wave (Binaural)</span>
+              <span class="channel-val" id="val-binaural">25%</span>
+            </div>
+            <input type="range" class="slider" id="vol-binaural" min="0" max="100" value="25">
+          </div>
+        </div>
+
+        <!-- Interactive Soundboard -->
+        <div class="soundboard-section">
+          <span class="subtag">QUICK JUICE SFX</span>
+          <div class="sfx-grid">
+            <button class="sfx-btn" id="sfx-chime">🔔 Zen Chime</button>
+            <button class="sfx-btn" id="sfx-laser">⚡ Cyber Zap</button>
+            <button class="sfx-btn" id="sfx-drop">💧 Water Droplet</button>
+            <button class="sfx-btn" id="sfx-success">✨ Level Up</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Status Bar -->
+    <footer class="bottom-bar glass">
+      <div class="bar-item">
+        <span class="label">MODE:</span>
+        <span class="value" id="status-theme-name">TOKYO RAIN</span>
+      </div>
+      <div class="bar-item">
+        <span class="label">AUDIO ENGINE:</span>
+        <span class="value" id="status-audio-state">STANDBY (CLICK TO ACTIVATE)</span>
+      </div>
+      <div class="bar-item right">
+        <span class="label">HOTKEY:</span>
+        <span class="value">SPACE = Play/Pause Timer</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="audio.js"></script>
+  <script src="particles.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
